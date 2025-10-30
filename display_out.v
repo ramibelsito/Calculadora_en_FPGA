@@ -7,8 +7,6 @@ module display_out(
     output wire sending_data
 );
 
-//assign clk = HF_int_osc;
-
 
 // Conversor BCD a 32 bits en segment_data
 localparam [7:0] Disp_0 = 8'b11111100; // 0
@@ -45,14 +43,14 @@ endfunction
 // Calculamos internamente los 32 bits de segmentos a partir de los 4 nibbles BCD
 wire [31:0] segment_data_calc;
 // LSB primero
-assign segment_data_calc = { bcd2seg(bcd_in[3:0]), 
-                             bcd2seg(bcd_in[7:4]), 
+assign segment_data_calc = { bcd2seg(bcd_in[15:12]), 
                              bcd2seg(bcd_in[11:8]), 
-                             bcd2seg(bcd_in[15:12]) }; 
+                             bcd2seg(bcd_in[7:4]), 
+                             bcd2seg(bcd_in[3:0]) }; 
 
 // Paralelo a Serie de 32 bits
 
-parameter [31:0] send_interval = 31'd31;
+parameter [31:0] send_interval = 31'd33;
 reg [31:0] interval_counter;
 reg [31:0] segment_data_out;
 
@@ -73,7 +71,7 @@ always @(negedge clk)
         
     end
 
-assign sending_data = (interval_counter == 31);
+assign sending_data = (interval_counter == 33);
 assign data_out = segment_data_out[0];
 
 endmodule
