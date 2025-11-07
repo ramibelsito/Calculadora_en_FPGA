@@ -54,7 +54,7 @@ parameter [31:0] send_interval = 31'd33;
 reg [31:0] interval_counter;
 reg [31:0] segment_data_out;
 
-always @(negedge clk)
+always @(posedge clk)
     if (rst) begin
         interval_counter <= 0;
         segment_data_out <= 0; 
