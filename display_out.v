@@ -1,3 +1,9 @@
+// display_out
+// -----------
+// Convierte 4 dígitos en BCD a su representación de 7 segmentos (más DP) y
+// envía los 32 bits resultantes en serie cada `send_interval` ciclos. Sirve como
+// interfaz simple entre la lógica de la calculadora y un shift-register/driver
+// externo del display.
 module display_out(
     input wire clk,
     input wire rst,
@@ -8,7 +14,7 @@ module display_out(
 );
 
 
-// Conversor BCD a 32 bits en segment_data
+// Conversor BCD a 32 bits en segment_data (cada nibble se mapea a 8 segmentos).
 localparam [7:0] Disp_0 = 8'b11111100; // 0
 localparam [7:0] Disp_1 = 8'b01100000; // 1
 localparam [7:0] Disp_2 = 8'b11011010; // 2
@@ -40,7 +46,7 @@ function [7:0] bcd2seg;
   end
 endfunction
 
-// Calculamos internamente los 32 bits de segmentos a partir de los 4 nibbles BCD
+// Calculamos internamente los 32 bits de segmentos a partir de los 4 nibbles BCD.
 wire [31:0] segment_data_calc;
 // LSB primero
 assign segment_data_calc = { bcd2seg(bcd_in[15:12]), 
@@ -48,12 +54,14 @@ assign segment_data_calc = { bcd2seg(bcd_in[15:12]),
                              bcd2seg(bcd_in[7:4]), 
                              bcd2seg(bcd_in[3:0]) }; 
 
-// Paralelo a Serie de 32 bits
+// Paralelo a serie de 32 bits: toma `segment_data_calc` y lo desplaza cada enable.
 
-parameter [31:0] send_interval = 31'd33;
+parameter [31:0] send_interval = 31'd33; // controla la cadencia de envío en bits.
 reg [31:0] interval_counter;
 reg [31:0] segment_data_out;
 
+// Gestiona el registro de desplazamiento y el contador que determina cuándo
+// recargar el paquete completo de 32 bits.
 always @(posedge clk)
     if (rst) begin
         interval_counter <= 0;

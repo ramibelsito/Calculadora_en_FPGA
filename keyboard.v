@@ -1,3 +1,10 @@
+// keyb_iface
+// ----------
+// Escanea el teclado matricial 4x4, detecta pulsaciones y entrega:
+//   - `is_number/is_op/is_eq` para clasificar el tipo de tecla
+//   - `num_val` con el dígito BCD y `op_val` con el código de operación (2 bits)
+// Utiliza un contador en anillo para barrer columnas y un contador simple para
+// mantener estable el valor detectado durante algunos ciclos (anti-rebote).
 module keyb_iface(
         input clk,
         input reset,
@@ -11,7 +18,7 @@ module keyb_iface(
         output reg [1:0] op_val);
 
 
-    //Ring counter para seleccionar columnas
+    // Ring counter para seleccionar columnas y energizar una a la vez.
     always @(posedge clk) begin
         if (reset)
             cols <= 4'b0000;
@@ -23,7 +30,7 @@ module keyb_iface(
         end
     end
 
-    //Armo el valor que recibo, combino col y fila
+    // Combinación de columna/fila para distinguir cada tecla.
     wire [3:0] btn_id;
 
     assign btn_id[3] = cols[1];
@@ -31,7 +38,7 @@ module keyb_iface(
     assign btn_id[1] = rows[1];
     assign btn_id[0] = rows[0];
  
-    //reg para 'guardar' el valor
+    // Registros para 'guardar' la tecla detectada y mantenerla viva unos ciclos.
     reg [3:0] btn_store;
     wire btn_active;
     reg [3:0] btn_count;
@@ -41,7 +48,7 @@ module keyb_iface(
     //indica que se presiono un boton
     assign any_btn = rows[0] || rows [1] || rows [2] || rows[3];
 
-    //guardo el valor que leo de fila y col
+    // Captura la tecla activa y mantiene `btn_active` por medio de `btn_count`.
     always @(posedge clk) begin
         if (reset) begin
             btn_store <= 4'd0;
@@ -79,7 +86,7 @@ module keyb_iface(
 
     assign btn_press = btn_active;
 
-    //genero las salidas en base a los botones
+    // Genera las salidas del módulo traduciendo cada tecla a flags o valores BCD/operación.
     always @(btn_active)
     begin
       if (!btn_active) begin

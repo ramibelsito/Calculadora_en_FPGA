@@ -1,5 +1,9 @@
 
-
+// dispout_tb
+// ----------
+// Testbench mínimo para `display_out`: genera un clock, libera reset y entrega
+// un valor BCD fijo para observar los pulsos de `data_out` y `sending_data` en
+// la simulación (volcado a 1.vcd).
 module dispout_tb();
     reg clk;
     reg reset;
@@ -17,16 +21,17 @@ module dispout_tb();
         .sending_data(sending_data)
     );
 
+    // Clock libre de 100 MHz (periodo 10) aproximado.
+    always begin
+        #5 clk = ~clk;
+    end
+
     initial begin
         clk <= 0;
         reset <= 1;
         bcd_in <= 16'b0010010101110001; // ejemplo de 4 nibbles
     end
 
-
-    always begin
-        #5 clk = ~clk;
-    end
 
     initial begin
         $dumpfile("1.vcd");
