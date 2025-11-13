@@ -48,6 +48,33 @@ module keyb_iface(
     //indica que se presiono un boton
     assign any_btn = rows[0] || rows [1] || rows [2] || rows[3];
 
+    // Valor a modificar para ampliar/reducir la ventana de ignorar rebotes.
+    parameter integer DEBOUNCE_CYCLES = 20'd500000;
+
+    reg debounced_btn;
+    reg candidate_btn;
+    reg [19:0] debounce_cnt;
+
+    // Filtra el rebote antes de informar la pulsación.
+    always @(posedge clk) begin
+        if (reset) begin
+            debounced_btn <= 1'b0;
+            candidate_btn <= 1'b0;
+            debounce_cnt <= 20'd0;
+        end
+        else begin
+            if (any_btn != candidate_btn) begin
+                candidate_btn <= any_btn;
+                debounce_cnt <= DEBOUNCE_CYCLES;
+            end
+            else if (debounce_cnt != 0) begin
+                debounce_cnt <= debounce_cnt - 1;
+                if (debounce_cnt == 1)
+                    debounced_btn <= candidate_btn;
+            end
+        end
+    end
+
     // Captura la tecla activa y mantiene `btn_active` por medio de `btn_count`.
     always @(posedge clk) begin
         if (reset) begin
@@ -56,7 +83,7 @@ module keyb_iface(
             btn_count <= 0;
         end
         else begin
-            if (any_btn) begin
+            if (debounced_btn) begin
                 btn_store <= btn_id;
                 //btn_active <= 1;
                 btn_count <= 5;
