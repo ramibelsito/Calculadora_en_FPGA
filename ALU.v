@@ -4,10 +4,10 @@
 // (0..9999) y finalmente vuelve al formato BCD. Se reutiliza el mismo código de operación
 // de 2 bits que generan el teclado/FSM (2'b10 => resta).
 
-module ALU_BCD (
+module ALU (
     input  wire [15:0] num1_bcd,   // D3 D2 D1 D0 (cada nibble 0..9)
     input  wire [15:0] num2_bcd,   // D3 D2 D1 D0 (cada nibble 0..9)
-    input  wire [1:0]  operacion,  // 2'b01 => + , 2'b10 => -
+    input  wire [1:0]  operation,  // 2'b01 => + , 2'b10 => -
     output reg  [15:0] out_ALU      // resultado en BCD (4 dígitos)
 );
 
@@ -45,13 +45,13 @@ module ALU_BCD (
     // ------------------------------------------------------------
     // ALU combinacional
     // ------------------------------------------------------------
-    // Operandos convertidos a binario para simplificar las operaciones aritméticas.
+    // Operandos convertidos a binario para simplificar las operationes aritméticas.
     wire [13:0] a_bin = bcd_to_bin(num1_bcd);
     wire [13:0] b_bin = bcd_to_bin(num2_bcd);
 
     // Decodificación simple de operación desde dos bits
     // 2'b10 => resta; cualquier otro => suma.
-    wire is_sub = (operacion == 2'd2);
+    wire is_sub = (operation == 2'd2);
 
     reg [13:0] res_bin;
 

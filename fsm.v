@@ -6,51 +6,57 @@
 //   máquina de estados de Mealy porque algunas salidas dependen directamente
 //   de las entradas actuales.
 // Implementacion de una maquina de estados de Mealy en Verilog
-module fsm_mealy (clk, reset, is_op, is_num, is_eq, num1, num2, operation, num_val, op_val, out_ALU);
-    input clk, reset, is_op, is_num, is_eq, [3:0] num_val, [1:0] op_val, [15:0] out_ALU;
-    output reg [15:0] num1, num2;
-    output reg [1:0] operation;
-    output reg [2:1] curr_state;
-    
-
+module fsm (
+    input clk, rst, is_op, is_num, is_eq,
+    input wire [3:0] num_val,
+    input wire [1:0] op_val,
+    input wire [15:0] out_ALU,
+    output reg [15:0] num1_bcd, 
+    output reg [15:0] num2_bcd,
+    output reg [1:0] operation,
+    output reg [1:0] curr_state,
+    );
     // Podria tener el curr_state como salida para debug
     //output [2:1] curr_state;
 
-    reg [2:1] curr_state, next_state;
+    reg [1:0] next_state;
 
     // Asignacion de estados
-    parameter [2:1] N1 = 2'b00;
-    parameter [2:1] OP = 2'b01;
-    parameter [2:1] N2 = 2'b10;
-    parameter [2:1] EQ = 2'b11;
+    parameter [1:0] N1 = 2'b00;
+    parameter [1:0] OP = 2'b01;
+    parameter [1:0] N2 = 2'b10;
+    parameter [1:0] EQ = 2'b11;
     // Lógica de próximo estado y salidas (combinacional).
     // Cada estado modela la captura de operandos u operaciones y
-    // actualiza `num1`, `num2` y `operation` según las entradas.
-    reg [2:1] aux;
+    // actualiza `num1_bcd`, `num2_bcd` y `operation` según las entradas.
+    reg [1:0] aux;
     always @(is_op, is_num, is_eq, curr_state)
         case (curr_state)
             // N1: ingreso del primer operando dígito a dígito hasta recibir una operación.
             N1: if (is_op)
                 begin
-                    num1 <= num_val;  //mi salida depend de entrada y estado actual
+                    num1_bcd <= num_val;  //mi salida depend de entrada y estado actual
                     aux <= N1;
                     next_state <= OP;
                 end
                else if (is_num)
                 begin
-                    num1 << 4; 
-                    num1 [3:0] <= num_val;
+                    num1_bcd <= num1_bcd << 4; 
+                    num1_bcd [3:0] <= num_val;
                     aux <= N1;
                     next_state <= N1;
                 end
                 else
                 begin
-                    num1 <= 0; //Salida en todos las combinaciones posibles!!
+                    num1_bcd <= 0; 
                     next_state <= N1;
                     aux <= N1;
                 end
             // OP: espera que se confirme la operación y opcionalmente la cambia.
-            OP: if (is_num && aux == OP)
+            OP: begin
+
+            
+                if (is_num && aux == OP)
                 begin
                     operation <= op_val;
                     next_state <= N2;
@@ -68,31 +74,32 @@ module fsm_mealy (clk, reset, is_op, is_num, is_eq, num1, num2, operation, num_v
                     next_state <= N1;
                     aux <= OP;
                 end
+            end
             // N2: ingreso del segundo operando; si llega otro operador se encadena cálculo.
             N2: if (is_eq)
                 begin
-                    num2 <= num_val;
+                    num2_bcd <= num_val;
                     next_state <= EQ;
                     aux <= N2;
                 end
                else if (is_num)
                 begin
-                    num2 << 4; 
-                    num2 [3:0] <= num_val;
+                    num2_bcd <= num2_bcd << 4; 
+                    num2_bcd [3:0] <= num_val;
                     next_state <= N2;
                     aux <= N2;
                 end
                 else if (is_op)
                 begin
-                    // Evaluar num1 y num2 segun la operacion, guardar el resultado en num1 
-                    num1 <= out_ALU;
+                    // Evaluar num1_bcd y num2_bcd segun la operacion, guardar el resultado en num1_bcd 
+                    num1_bcd <= out_ALU;
                     operation <= op_val;
                     next_state <= OP;
                     aux <= N2;
                 end
                 else 
                 begin
-                    num2 <= 0;
+                    num2_bcd <= 0;
                     next_state <= N1;
                     aux <= N2;
                 end
@@ -100,35 +107,35 @@ module fsm_mealy (clk, reset, is_op, is_num, is_eq, num1, num2, operation, num_v
             EQ: if (is_num)
                 begin
                     next_state <= N1;
-                    num1 = num_val;
+                    num1_bcd = num_val;
                     aux <= EQ;
                 end
                 else if (is_op)
                 begin
                     next_state <= OP;
                     operation <= op_val;
-                    num1 <= out_ALU;
+                    num1_bcd <= out_ALU;
                     aux <= EQ;
                 end
                 else 
                 begin
                     next_state <= N1;
-                    num1 <= 0;
+                    num1_bcd <= 0;
                     aux <= EQ;
                 end
             default:
                 begin
                     next_state <= N1;
-                    num1 <= 0;
-                    num2 <= 0;
+                    num1_bcd <= 0;
+                    num2_bcd <= 0;
                     operation <= 0;
                     aux <= N1;
                 end
         endcase
 
-    // Transición de estado sincronizada al clock (reset asíncrono activo en 0).
-    always @(negedge reset, posedge clk)
-        if (reset == 0) curr_state <= N1;
+    // Transición de estado sincronizada al clock (rst asíncrono activo en 0).
+    always @(negedge rst, posedge clk)
+        if (rst == 0) curr_state <= N1;
         else curr_state <= next_state;
 
 endmodule

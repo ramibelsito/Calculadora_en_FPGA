@@ -66,7 +66,7 @@ always @(posedge clk)
     if (rst) begin
         interval_counter <= 0;
         segment_data_out <= 0; 
-    end else if (enable) begin
+    end else  begin
         if (interval_counter == 0)
             segment_data_out <= segment_data_calc;
         else 
@@ -74,8 +74,8 @@ always @(posedge clk)
 
         if (interval_counter <= send_interval)
             interval_counter <= interval_counter + 1;
-        else   
-            interval_counter <= 0;
+        
+        if (enable) interval_counter <= 0; // Checkear esto. No estoy seguro que este bien
         
     end
 

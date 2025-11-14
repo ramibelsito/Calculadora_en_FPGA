@@ -1,16 +1,16 @@
 // keyb_iface
 // ----------
 // Escanea el teclado matricial 4x4, detecta pulsaciones y entrega:
-//   - `is_number/is_op/is_eq` para clasificar el tipo de tecla
+//   - `is_num/is_op/is_eq` para clasificar el tipo de tecla
 //   - `num_val` con el dígito BCD y `op_val` con el código de operación (2 bits)
 // Utiliza un contador en anillo para barrer columnas y un contador simple para
 // mantener estable el valor detectado durante algunos ciclos (anti-rebote).
-module keyb_iface(
+module keyboard(
         input clk,
-        input reset,
+        input rst,
         output reg [3:0] cols, 
         input wire [3:0] rows,
-        output reg is_number,
+        output reg is_num,
         output reg is_op,
         output reg is_eq,
         output wire btn_press,
@@ -20,7 +20,7 @@ module keyb_iface(
 
     // Ring counter para seleccionar columnas y energizar una a la vez.
     always @(posedge clk) begin
-        if (reset)
+        if (rst)
             cols <= 4'b0000;
         else begin
             if (cols == 4'b0000)
@@ -57,7 +57,7 @@ module keyb_iface(
 
     // Filtra el rebote antes de informar la pulsación.
     always @(posedge clk) begin
-        if (reset) begin
+        if (rst) begin
             debounced_btn <= 1'b0;
             candidate_btn <= 1'b0;
             debounce_cnt <= 20'd0;
@@ -77,7 +77,7 @@ module keyb_iface(
 
     // Captura la tecla activa y mantiene `btn_active` por medio de `btn_count`.
     always @(posedge clk) begin
-        if (reset) begin
+        if (rst) begin
             btn_store <= 4'd0;
             //btn_active <= 0;
             btn_count <= 0;
@@ -117,7 +117,7 @@ module keyb_iface(
     always @(btn_active)
     begin
       if (!btn_active) begin
-        is_number <= 0;
+        is_num <= 0;
         is_eq <= 0;
         is_op <= 0;
         num_val <= 4'd0;
@@ -126,70 +126,70 @@ module keyb_iface(
       else
         case (btn_store)
             BTN_0: begin 
-                is_number <= 1;
+                is_num <= 1;
                 is_eq <= 0;
                 is_op <= 0;
                 num_val <= 4'd0;
                 op_val <= 2'd0;
             end
             BTN_1: begin 
-                is_number <= 1;
+                is_num <= 1;
                 is_eq <= 0;
                 is_op <= 0;
                 num_val <= 4'd1;
                 op_val <= 2'd0;
             end
             BTN_2: begin 
-                is_number <= 1;
+                is_num <= 1;
                 is_eq <= 0;
                 is_op <= 0;
                 num_val <= 4'd2;
                 op_val <= 2'd0;
             end
             BTN_3: begin 
-                is_number <= 1;
+                is_num <= 1;
                 is_eq <= 0;
                 is_op <= 0;
                 num_val <= 4'd3;
                 op_val <= 2'd0;
             end
             BTN_4: begin 
-                is_number <= 1;
+                is_num <= 1;
                 is_eq <= 0;
                 is_op <= 0;
                 num_val <= 4'd4;
                 op_val <= 2'd0;
             end
             BTN_5: begin 
-                is_number <= 1;
+                is_num <= 1;
                 is_eq <= 0;
                 is_op <= 0;
                 num_val <= 4'd5;
                 op_val <= 2'd0;
             end
             BTN_6: begin 
-                is_number <= 1;
+                is_num <= 1;
                 is_eq <= 0;
                 is_op <= 0;
                 num_val <= 4'd6;
                 op_val <= 2'd0;
             end
             BTN_7: begin 
-                is_number <= 1;
+                is_num <= 1;
                 is_eq <= 0;
                 is_op <= 0;
                 num_val <= 4'd7;
                 op_val <= 2'd0;
             end
             BTN_8: begin 
-                is_number <= 1;
+                is_num <= 1;
                 is_eq <= 0;
                 is_op <= 0;
                 num_val <= 4'd8;
                 op_val <= 2'd0;
             end
             BTN_9: begin 
-                is_number <= 1;
+                is_num <= 1;
                 is_eq <= 0;
                 is_op <= 0;
                 num_val <= 4'd9;
@@ -197,14 +197,14 @@ module keyb_iface(
             end
             
             BTN_PLUS: begin 
-                is_number <= 0;
+                is_num <= 0;
                 is_eq <= 0;
                 is_op <= 1;
                 num_val <= 4'd0;
                 op_val <= 2'd1;
             end
             BTN_MIN: begin 
-                is_number <= 0;
+                is_num <= 0;
                 is_eq <= 0;
                 is_op <= 1;
                 num_val <= 4'd0;
@@ -213,7 +213,7 @@ module keyb_iface(
 
 
             BTN_EQ: begin 
-                is_number <= 0;
+                is_num <= 0;
                 is_eq <= 1;
                 is_op <= 0;
                 num_val <= 4'd0;
