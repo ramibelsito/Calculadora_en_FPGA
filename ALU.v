@@ -10,11 +10,16 @@ module ALU (
     input  wire [1:0]  operation,  // 2'b01 => + , 2'b10 => -
     output reg  [15:0] out_ALU      // resultado en BCD (4 dígitos)
 );
-
+    reg [15:0] num1_bcd_next;
+    reg [15:0] num2_bcd_next;
     // ------------------------------------------------------------
     // Funciones auxiliares (combinacionales)
     // ------------------------------------------------------------
-
+    always @(posedge(clk))
+    begin
+        num1_bcd_next <= num1_bcd;
+        num2_bcd_next <= num2_bcd;
+    end
     // BCD (4 dígitos) -> binario (0..9999)
     function automatic [13:0] bcd_to_bin (input [15:0] bcd);
         integer th, h, t, u;
@@ -46,8 +51,8 @@ module ALU (
     // ALU combinacional
     // ------------------------------------------------------------
     // Operandos convertidos a binario para simplificar las operationes aritméticas.
-    wire [13:0] a_bin = bcd_to_bin(num1_bcd);
-    wire [13:0] b_bin = bcd_to_bin(num2_bcd);
+    wire [13:0] a_bin = bcd_to_bin(num1_bcd_next);
+    wire [13:0] b_bin = bcd_to_bin(num2_bcd_next);
 
     // Decodificación simple de operación desde dos bits
     // 2'b10 => resta; cualquier otro => suma.
@@ -56,7 +61,7 @@ module ALU (
     reg [13:0] res_bin;
 
     // Hace la operación solicitada y convierte el resultado de vuelta a BCD.
-    always @(*) begin
+    always @(posedge(clk)) begin
         if (is_sub) begin
             // Resta saturada a 0 en caso de underflow
             if (a_bin >= b_bin) res_bin = a_bin - b_bin;
@@ -68,6 +73,6 @@ module ALU (
         end
 
         out_ALU = bin_to_bcd(res_bin);
-    end
+    end 
 
 endmodule
