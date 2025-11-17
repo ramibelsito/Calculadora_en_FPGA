@@ -42,6 +42,7 @@ wire is_op;
 wire is_eq;
 wire [3:0] num_val;
 wire [1:0] op_val;
+
 // Wires FSM -> Multiplexor
 wire [15:0] num1_bcd;
 wire [15:0] num2_bcd;
@@ -74,7 +75,7 @@ keyboard u_keyboard (
     .num_val(num_val),
     .op_val(op_val)
 );
-
+/*
 fsm u_fsm (
     .clk(LF_int_osc),
     .rst(rst),
@@ -89,7 +90,7 @@ fsm u_fsm (
     .out_ALU(out_ALU),
     .curr_state(curr_state)
 );
-
+*/
 multiplexor u_multiplexor (
     .clk(LF_int_osc),
     .rst(rst),

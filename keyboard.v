@@ -219,6 +219,14 @@ module keyboard(
                 num_val <= 4'd0;
                 op_val <= 2'd0;
             end
+            default: 
+            begin 
+                is_num <= 0;
+                is_eq <= 0;
+                is_op <= 0;
+                num_val <= 4'd0;
+                op_val <= 2'd0;
+            end
 
         endcase
     end

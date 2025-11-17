@@ -16,7 +16,7 @@ module fsm (
     output reg [1:0] operation,
     output reg [1:0] curr_state,
     );
-    // Podria tener el curr_state como salida para debug
+  // Podria tener el curr_state como salida para debug
     //output [2:1] curr_state;
 
     reg [1:0] next_state;
