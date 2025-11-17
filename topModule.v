@@ -75,7 +75,7 @@ keyboard u_keyboard (
     .num_val(num_val),
     .op_val(op_val)
 );
-/*
+
 fsm u_fsm (
     .clk(LF_int_osc),
     .rst(rst),
@@ -90,7 +90,7 @@ fsm u_fsm (
     .out_ALU(out_ALU),
     .curr_state(curr_state)
 );
-*/
+
 multiplexor u_multiplexor (
     .clk(LF_int_osc),
     .rst(rst),

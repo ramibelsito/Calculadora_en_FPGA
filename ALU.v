@@ -56,7 +56,7 @@ module ALU (
     reg [13:0] res_bin;
 
     // Hace la operación solicitada y convierte el resultado de vuelta a BCD.
-    always @* begin
+    always @(*) begin
         if (is_sub) begin
             // Resta saturada a 0 en caso de underflow
             if (a_bin >= b_bin) res_bin = a_bin - b_bin;

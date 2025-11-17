@@ -30,10 +30,11 @@ module fsm (
     // Cada estado modela la captura de operandos u operaciones y
     // actualiza `num1_bcd`, `num2_bcd` y `operation` según las entradas.
     reg [1:0] aux;
-    always @(is_op, is_num, is_eq, curr_state)
+    always @(*)
         case (curr_state)
             // N1: ingreso del primer operando dígito a dígito hasta recibir una operación.
-            N1: if (is_op)
+            N1: begin
+                if (is_op)
                 begin
                     num1_bcd <= num_val;  //mi salida depend de entrada y estado actual
                     aux <= N1;
@@ -52,6 +53,7 @@ module fsm (
                     next_state <= N1;
                     aux <= N1;
                 end
+            end
             // OP: espera que se confirme la operación y opcionalmente la cambia.
             OP: begin
 
@@ -76,7 +78,8 @@ module fsm (
                 end
             end
             // N2: ingreso del segundo operando; si llega otro operador se encadena cálculo.
-            N2: if (is_eq)
+            N2: begin
+                if (is_eq)
                 begin
                     num2_bcd <= num_val;
                     next_state <= EQ;
@@ -103,8 +106,10 @@ module fsm (
                     next_state <= N1;
                     aux <= N2;
                 end
+            end
             // EQ: muestra resultado, pero permite arrancar una nueva operación inmediatamente.
-            EQ: if (is_num)
+            EQ: begin
+                if (is_num)
                 begin
                     next_state <= N1;
                     num1_bcd = num_val;
@@ -123,6 +128,7 @@ module fsm (
                     num1_bcd <= 0;
                     aux <= EQ;
                 end
+            end
             default:
                 begin
                     next_state <= N1;

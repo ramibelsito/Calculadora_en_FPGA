@@ -114,7 +114,7 @@ module keyboard(
     assign btn_press = btn_active;
 
     // Genera las salidas del módulo traduciendo cada tecla a flags o valores BCD/operación.
-    always @(btn_active)
+    always @(*)
     begin
       if (!btn_active) begin
         is_num <= 0;
