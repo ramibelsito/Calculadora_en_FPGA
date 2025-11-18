@@ -10,7 +10,12 @@ module topModule
     output wire gpio_31,
     output wire gpio_37,
     output wire gpio_2,
-    output wire gpio_46
+    output wire gpio_46,
+
+    output wire gpio_45,
+    output wire gpio_44,
+    output wire gpio_43,
+    output wire gpio_42
 );
 
 
@@ -26,9 +31,14 @@ assign cols[1] = gpio_35;
 assign cols[2] = gpio_31;
 assign cols[3] = gpio_37;
 wire btn_press= gpio_46;
+wire [3:0] btn_id;
+assign btn_id[0] = gpio_45;
+assign btn_id[1] = gpio_44;
+assign btn_id[2] = gpio_43;
+assign btn_id[3] = gpio_42;
 
-wire is_num=gpio_2;
-wire is_op;
+wire is_num;
+wire is_op=gpio_2;
 wire is_eq;
 wire [3:0] num_val;
 wire [1:0] op_val;
@@ -44,7 +54,8 @@ keyboard u_keyboard (
     .is_eq(is_eq),
     .btn_press(btn_press),
     .num_val(num_val),
-    .op_val(op_val)
+    .op_val(op_val),
+    .btn_id(btn_id)
 );
 
 wire HF_int_osc;

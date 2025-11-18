@@ -7,6 +7,7 @@ module keyboard(
         output reg is_eq,
         output wire btn_press,
         output reg [3:0] num_val,
+        output wire [3:0] btn_id,
         output reg [1:0] op_val);
 
     reg rst ;
@@ -14,23 +15,62 @@ module keyboard(
     //Ring counter para seleccionar columnas
     always @(posedge clk) begin
         if (rst)
+        begin
             cols <= 4'b0000;
+            btn_id <= 4'b0000;
+        end
         else begin
             if (cols == 4'b0000)
                 cols <= 4'b0001;
             else
                 cols <= cols << 1;
         end
+        //Armo el valor que recibo, combino col y fila
+    btn_id = 4'b0000;
+    if (cols == 4'b0001)
+        begin 
+        btn_id[3] = 1'b0;
+        btn_id[2] = 1'b0;
+        end
+    else if (cols == 4'b0010)
+        begin 
+        btn_id[3] = 1'b0;
+        btn_id[2] = 1'b1;
+        end
+    else if (cols == 4'b0100)
+        begin 
+        btn_id[3] = 1'b1;
+        btn_id[2] = 1'b0;
+        end
+    else //cols == 4'b1000
+        begin 
+        btn_id[3] = 1'b1;
+        btn_id[2] = 1'b1;
+        end
+    if (rows == 4'b1000)
+    begin
+        btn_id[1] = 1'b0;
+        btn_id[0] = 1'b0;
+    end
+    else if (rows == 4'b0100)
+    begin
+        btn_id[1] = 1'b0;
+        btn_id[0] = 1'b1;
+    end
+    else if (rows == 4'b0010)
+    begin
+        btn_id[1] = 1'b1;
+        btn_id[0] = 1'b0;
+    end
+    else //rows = 4b'0001
+    begin
+        btn_id[1] = 1'b1;
+        btn_id[0] = 1'b1;
+    end
+    btn_id <= ~btn_id;
     end
 
-    //Armo el valor que recibo, combino col y fila
-    wire [3:0] btn_id;
-
-    assign btn_id[3] = cols[1];
-    assign btn_id[2] = cols[0];
-    assign btn_id[1] = rows[1];
-    assign btn_id[0] = rows[0];
- 
+    
     //reg para 'guardar' el valor
     reg [3:0] btn_store;
     wire btn_active;
@@ -72,16 +112,20 @@ module keyboard(
     end
 
     //decodifico los valores posibles
-    parameter [3:0] BTN_0 =    4'b0111;    //0000 0000 0000 0100;
+
     parameter [3:0] BTN_1 =    4'b0000;    //1000 0000 0000 0000;
-    parameter [3:0] BTN_2 =    4'b0100;    //0100 0000 0000 0000;
-    parameter [3:0] BTN_3 =    4'b1000;    //0010 0000 0000 0000;
     parameter [3:0] BTN_4 =    4'b0001;    //0000 1000 0000 0000;
-    parameter [3:0] BTN_5 =    4'b0101;    //0000 0100 0000 0000;
-    parameter [3:0] BTN_6 =    4'b1001;    //0000 0010 0000 0000;
     parameter [3:0] BTN_7 =    4'b0010;    //0000 0000 1000 0000;
+
+    parameter [3:0] BTN_2 =    4'b0100;    //0100 0000 0000 0000;
+    parameter [3:0] BTN_5 =    4'b0101;    //0000 0100 0000 0000;
     parameter [3:0] BTN_8 =    4'b0110;    //0000 0000 0100 0000;
+    parameter [3:0] BTN_0 =    4'b0111;    //0000 0000 0000 0100;
+
+    parameter [3:0] BTN_3 =    4'b1000;    //0010 0000 0000 0000;
+    parameter [3:0] BTN_6 =    4'b1001;    //0000 0010 0000 0000;
     parameter [3:0] BTN_9 =    4'b1010;    //0000 0000 0010 0000;
+
     parameter [3:0] BTN_PLUS = 4'b1100;    //0001 0000 0000 0000;
     parameter [3:0] BTN_MIN =  4'b1101;    //0000 0001 0000 0000;
     parameter [3:0] BTN_EQ =   4'b1111;    //0000 0000 0000 0001;
