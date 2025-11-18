@@ -54,7 +54,7 @@ module keyboard(
     reg debounced_btn;
     reg candidate_btn;
     reg [19:0] debounce_cnt;
-
+    
     // Filtra el rebote antes de informar la pulsación.
     always @(posedge clk) begin
         if (rst) begin
