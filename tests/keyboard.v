@@ -1,87 +1,52 @@
 module keyboard(
         input clk,
+        input rst,
         output reg [3:0] cols, 
         input wire [3:0] rows,
         output reg is_num,
         output reg is_op,
         output reg is_eq,
         output wire btn_press,
+        output reg [3:0] btn_store,
         output reg [3:0] num_val,
-        output wire [3:0] btn_id,
         output reg [1:0] op_val);
 
-    reg rst ;
-    
+
     //Ring counter para seleccionar columnas
     always @(posedge clk) begin
         if (rst)
-        begin
             cols <= 4'b0000;
-            btn_id <= 4'b0000;
-        end
         else begin
             if (cols == 4'b0000)
                 cols <= 4'b0001;
             else
                 cols <= cols << 1;
         end
-        //Armo el valor que recibo, combino col y fila
-    btn_id = 4'b0000;
-    if (cols == 4'b0001)
-        begin 
-        btn_id[3] = 1'b0;
-        btn_id[2] = 1'b0;
-        end
-    else if (cols == 4'b0010)
-        begin 
-        btn_id[3] = 1'b0;
-        btn_id[2] = 1'b1;
-        end
-    else if (cols == 4'b0100)
-        begin 
-        btn_id[3] = 1'b1;
-        btn_id[2] = 1'b0;
-        end
-    else //cols == 4'b1000
-        begin 
-        btn_id[3] = 1'b1;
-        btn_id[2] = 1'b1;
-        end
-    if (rows == 4'b1000)
-    begin
-        btn_id[1] = 1'b0;
-        btn_id[0] = 1'b0;
     end
-    else if (rows == 4'b0100)
-    begin
-        btn_id[1] = 1'b0;
-        btn_id[0] = 1'b1;
-    end
-    else if (rows == 4'b0010)
-    begin
-        btn_id[1] = 1'b1;
-        btn_id[0] = 1'b0;
-    end
-    else //rows = 4b'0001
-    begin
-        btn_id[1] = 1'b1;
-        btn_id[0] = 1'b1;
-    end
-    btn_id <= ~btn_id;
+
+    //Armo el valor que recibo, combino col y fila
+    reg [3:0] btn_id;
+    always @(*) begin
+        case (cols)
+            4'b1000: btn_id[3:2] = 2'b00;
+            4'b0100: btn_id[3:2] = 2'b01;
+            4'b0010: btn_id[3:2] = 2'b10;
+            4'b0001: btn_id[3:2] = 2'b11; 
+            default: btn_id[3:2] = 2'b00;
+        endcase
+        case (rows)
+            4'b1000: btn_id[1:0] = 2'b00;
+            4'b0100: btn_id[1:0] = 2'b01;
+            4'b0010: btn_id[1:0] = 2'b10;
+            4'b0001: btn_id[1:0] = 2'b11; 
+            default: btn_id[1:0] = 2'b00;
+        endcase
     end
 
     
-    //reg para 'guardar' el valor
-    reg [3:0] btn_store;
     wire btn_active;
     reg [3:0] btn_count;
-    reg first_press_seen;
     assign btn_active = (btn_count>0);
-
-    initial begin
-        rst = 1'b0;
-        first_press_seen = 1'b0;
-    end
 
     wire any_btn;
     //indica que se presiono un boton
@@ -93,7 +58,6 @@ module keyboard(
             btn_store <= 4'd0;
             //btn_active <= 0;
             btn_count <= 0;
-            first_press_seen <= 1'b0;
         end
         else begin
             if (any_btn) begin
@@ -104,36 +68,32 @@ module keyboard(
             else if (btn_count > 0)
                 btn_count <= btn_count - 1;
 
-            if (btn_active && !first_press_seen)
-                first_press_seen <= 1'b1;
 
         end
         
     end
 
-    //decodifico los valores posibles
+parameter BTN_1 = 4'b0000; // 1000 0000 0000 0000
+parameter BTN_2 = 4'b0100; // 0100 0000 0000 0000
+parameter BTN_3 = 4'b1000; // 0010 0000 0000 0000
+parameter BTN_ADD = 4'b1100; // 0001 0000 0000 0000
 
-    parameter [3:0] BTN_1 =    4'b0000;    //1000 0000 0000 0000;
-    parameter [3:0] BTN_4 =    4'b0001;    //0000 1000 0000 0000;
-    parameter [3:0] BTN_7 =    4'b0010;    //0000 0000 1000 0000;
+parameter BTN_4 = 4'b0001; // 0000 1000 0000 0000
+parameter BTN_5 = 4'b0101; // 0000 0100 0000 0000
+parameter BTN_6 = 4'b1001; // 0000 0010 0000 0000
+parameter BTN_SUB = 4'b1101; // 0000 0001 0000 0000
 
-    parameter [3:0] BTN_2 =    4'b0100;    //0100 0000 0000 0000;
-    parameter [3:0] BTN_5 =    4'b0101;    //0000 0100 0000 0000;
-    parameter [3:0] BTN_8 =    4'b0110;    //0000 0000 0100 0000;
-    parameter [3:0] BTN_0 =    4'b0111;    //0000 0000 0000 0100;
+parameter BTN_7 = 4'b0010; // 0000 0000 1000 0000
+parameter BTN_8 = 4'b0110; // 0000 0000 0100 0000
+parameter BTN_9 = 4'b1010; // 0000 0000 0010 0000
+parameter BTN_MUL = 4'b1110; // 0000 0000 0001 0000
 
-    parameter [3:0] BTN_3 =    4'b1000;    //0010 0000 0000 0000;
-    parameter [3:0] BTN_6 =    4'b1001;    //0000 0010 0000 0000;
-    parameter [3:0] BTN_9 =    4'b1010;    //0000 0000 0010 0000;
-
-    parameter [3:0] BTN_PLUS = 4'b1100;    //0001 0000 0000 0000;
-    parameter [3:0] BTN_MIN =  4'b1101;    //0000 0001 0000 0000;
-    parameter [3:0] BTN_EQ =   4'b1111;    //0000 0000 0000 0001;
-
-    assign btn_press = btn_active && !first_press_seen;
+parameter BTN_0 = 4'b0111; // 0000 0000 0000 0100
+parameter BTN_EQ = 4'b1111; // 0000 0000 0000 0001
+assign btn_press = btn_active;
 
     //genero las salidas en base a los botones
-    always @(*)
+    always @(btn_active)
     begin
       if (!btn_active) begin
         is_num <= 0;
@@ -214,15 +174,14 @@ module keyboard(
                 num_val <= 4'd9;
                 op_val <= 2'd0;
             end
-
-            BTN_PLUS: begin 
+            BTN_ADD: begin 
                 is_num <= 0;
                 is_eq <= 0;
                 is_op <= 1;
                 num_val <= 4'd0;
                 op_val <= 2'd1;
             end
-            BTN_MIN: begin 
+            BTN_SUB: begin 
                 is_num <= 0;
                 is_eq <= 0;
                 is_op <= 1;
@@ -234,13 +193,6 @@ module keyboard(
             BTN_EQ: begin 
                 is_num <= 0;
                 is_eq <= 1;
-                is_op <= 0;
-                num_val <= 4'd0;
-                op_val <= 2'd0;
-            end
-            default: begin
-                is_num <= 0;
-                is_eq <= 0;
                 is_op <= 0;
                 num_val <= 4'd0;
                 op_val <= 2'd0;
