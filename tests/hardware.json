@@ -9638,7 +9638,7 @@
       "attributes": {
         "hdlname": "\\topModule",
         "top": "00000000000000000000000000000001",
-        "src": "topModule.v:1.1-80.10"
+        "src": "topModule.v:1.1-84.10"
       },
       "ports": {
         "gpio_23": {
@@ -9699,6 +9699,31 @@
         }
       },
       "cells": {
+        "gpio_23_SB_LUT4_I0": {
+          "hide_name": 0,
+          "type": "SB_LUT4",
+          "parameters": {
+            "LUT_INIT": "1111111011101011"
+          },
+          "attributes": {
+            "module_not_derived": "00000000000000000000000000000001",
+            "src": "/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/cells_map.v:26.33-27.52"
+          },
+          "port_directions": {
+            "I0": "input",
+            "I1": "input",
+            "I2": "input",
+            "I3": "input",
+            "O": "output"
+          },
+          "connections": {
+            "I0": [ 2 ],
+            "I1": [ 4 ],
+            "I2": [ 5 ],
+            "I3": [ 3 ],
+            "O": [ 16 ]
+          }
+        },
         "gpio_25_SB_LUT4_I0": {
           "hide_name": 0,
           "type": "SB_LUT4",
@@ -9718,10 +9743,10 @@
           },
           "connections": {
             "I0": [ 3 ],
-            "I1": [ 5 ],
-            "I2": [ 2 ],
-            "I3": [ 4 ],
-            "O": [ 16 ]
+            "I1": [ 2 ],
+            "I2": [ 4 ],
+            "I3": [ 5 ],
+            "O": [ 17 ]
           }
         },
         "gpio_26_SB_LUT4_I0": {
@@ -9743,34 +9768,9 @@
           },
           "connections": {
             "I0": [ 4 ],
-            "I1": [ 5 ],
-            "I2": [ 3 ],
-            "I3": [ 2 ],
-            "O": [ 17 ]
-          }
-        },
-        "gpio_27_SB_LUT4_I0": {
-          "hide_name": 0,
-          "type": "SB_LUT4",
-          "parameters": {
-            "LUT_INIT": "1111111011101011"
-          },
-          "attributes": {
-            "module_not_derived": "00000000000000000000000000000001",
-            "src": "/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/cells_map.v:26.33-27.52"
-          },
-          "port_directions": {
-            "I0": "input",
-            "I1": "input",
-            "I2": "input",
-            "I3": "input",
-            "O": "output"
-          },
-          "connections": {
-            "I0": [ 5 ],
-            "I1": [ 3 ],
-            "I2": [ 2 ],
-            "I3": [ 4 ],
+            "I1": [ 2 ],
+            "I2": [ 5 ],
+            "I3": [ 3 ],
             "O": [ 18 ]
           }
         },
@@ -9781,7 +9781,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:56.5-74.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:24.66-24.119"
+            "src": "topModule.v:55.10-69.2|keyboard.v:59.5-77.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:24.66-24.119"
           },
           "port_directions": {
             "C": "input",
@@ -9792,10 +9792,10 @@
           },
           "connections": {
             "C": [ 15 ],
-            "D": [ 16 ],
+            "D": [ 18 ],
             "E": [ 19 ],
             "Q": [ 10 ],
-            "R": [ 18 ]
+            "R": [ 16 ]
           }
         },
         "gpio_31_SB_DFFSR_Q": {
@@ -9805,7 +9805,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:16.5-25.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:19.59-19.105"
+            "src": "topModule.v:55.10-69.2|keyboard.v:19.5-29.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:19.59-19.105"
           },
           "port_directions": {
             "C": "input",
@@ -9827,7 +9827,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:16.5-25.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:2.51-2.90"
+            "src": "topModule.v:55.10-69.2|keyboard.v:19.5-29.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:2.51-2.90"
           },
           "port_directions": {
             "C": "input",
@@ -9847,7 +9847,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:16.5-25.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:19.59-19.105"
+            "src": "topModule.v:55.10-69.2|keyboard.v:19.5-29.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:19.59-19.105"
           },
           "port_directions": {
             "C": "input",
@@ -9869,7 +9869,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:16.5-25.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:19.59-19.105"
+            "src": "topModule.v:55.10-69.2|keyboard.v:19.5-29.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:19.59-19.105"
           },
           "port_directions": {
             "C": "input",
@@ -9884,7 +9884,7 @@
             "R": [ 20 ]
           }
         },
-        "gpio_37_SB_LUT4_I3": {
+        "gpio_37_SB_LUT4_I2": {
           "hide_name": 0,
           "type": "SB_LUT4",
           "parameters": {
@@ -9902,10 +9902,10 @@
             "O": "output"
           },
           "connections": {
-            "I0": [ 6 ],
-            "I1": [ 7 ],
-            "I2": [ 8 ],
-            "I3": [ 9 ],
+            "I0": [ 7 ],
+            "I1": [ 8 ],
+            "I2": [ 9 ],
+            "I3": [ 6 ],
             "O": [ 20 ]
           }
         },
@@ -9966,7 +9966,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:56.5-74.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:24.66-24.119"
+            "src": "topModule.v:55.10-69.2|keyboard.v:59.5-77.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:24.66-24.119"
           },
           "port_directions": {
             "C": "input",
@@ -10001,10 +10001,10 @@
             "O": "output"
           },
           "connections": {
-            "I0": [ 7 ],
-            "I1": [ 9 ],
-            "I2": [ 6 ],
-            "I3": [ 8 ],
+            "I0": [ 8 ],
+            "I1": [ 6 ],
+            "I2": [ 7 ],
+            "I3": [ 9 ],
             "O": [ 28 ]
           }
         },
@@ -10026,10 +10026,10 @@
             "O": "output"
           },
           "connections": {
-            "I0": [ 8 ],
-            "I1": [ 9 ],
-            "I2": [ 6 ],
-            "I3": [ 7 ],
+            "I0": [ 7 ],
+            "I1": [ 6 ],
+            "I2": [ 8 ],
+            "I3": [ 9 ],
             "O": [ 26 ]
           }
         },
@@ -10051,10 +10051,10 @@
             "O": "output"
           },
           "connections": {
-            "I0": [ 9 ],
-            "I1": [ 6 ],
-            "I2": [ 7 ],
-            "I3": [ 8 ],
+            "I0": [ 6 ],
+            "I1": [ 7 ],
+            "I2": [ 8 ],
+            "I3": [ 9 ],
             "O": [ 27 ]
           }
         },
@@ -10065,7 +10065,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:56.5-74.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:24.66-24.119"
+            "src": "topModule.v:55.10-69.2|keyboard.v:59.5-77.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:24.66-24.119"
           },
           "port_directions": {
             "C": "input",
@@ -10079,7 +10079,7 @@
             "D": [ 17 ],
             "E": [ 19 ],
             "Q": [ 11 ],
-            "R": [ 18 ]
+            "R": [ 16 ]
           }
         },
         "gpio_47_SB_DFFESR_Q": {
@@ -10089,7 +10089,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:56.5-74.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:24.66-24.119"
+            "src": "topModule.v:55.10-69.2|keyboard.v:59.5-77.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:24.66-24.119"
           },
           "port_directions": {
             "C": "input",
@@ -10113,7 +10113,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:78.14-78.77"
+            "src": "topModule.v:82.14-82.77"
           },
           "port_directions": {
             "CLKLF": "output",
@@ -10144,10 +10144,10 @@
             "O": "output"
           },
           "connections": {
-            "I0": [ 3 ],
-            "I1": [ 2 ],
-            "I2": [ 4 ],
-            "I3": [ 5 ],
+            "I0": [ 4 ],
+            "I1": [ 5 ],
+            "I2": [ 3 ],
+            "I3": [ 2 ],
             "O": [ 19 ]
           }
         },
@@ -10158,7 +10158,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:56.5-74.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:24.66-24.119"
+            "src": "topModule.v:55.10-69.2|keyboard.v:59.5-77.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:24.66-24.119"
           },
           "port_directions": {
             "C": "input",
@@ -10182,7 +10182,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:56.5-74.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:24.66-24.119"
+            "src": "topModule.v:55.10-69.2|keyboard.v:59.5-77.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:24.66-24.119"
           },
           "port_directions": {
             "C": "input",
@@ -10206,7 +10206,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:56.5-74.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:25.66-25.119"
+            "src": "topModule.v:55.10-69.2|keyboard.v:59.5-77.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:25.66-25.119"
           },
           "port_directions": {
             "C": "input",
@@ -10230,7 +10230,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:56.5-74.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:25.66-25.119"
+            "src": "topModule.v:55.10-69.2|keyboard.v:59.5-77.8|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/ff_map.v:25.66-25.119"
           },
           "port_directions": {
             "C": "input",
@@ -10255,7 +10255,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:69.30-69.43|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/arith_map.v:62.5-70.4|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/cells_map.v:26.33-27.52"
+            "src": "topModule.v:55.10-69.2|keyboard.v:72.30-72.43|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/arith_map.v:62.5-70.4|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/cells_map.v:26.33-27.52"
           },
           "port_directions": {
             "I0": "input",
@@ -10280,7 +10280,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:69.30-69.43|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/arith_map.v:62.5-70.4|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/cells_map.v:26.33-27.52"
+            "src": "topModule.v:55.10-69.2|keyboard.v:72.30-72.43|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/arith_map.v:62.5-70.4|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/cells_map.v:26.33-27.52"
           },
           "port_directions": {
             "I0": "input",
@@ -10305,7 +10305,7 @@
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:69.30-69.43|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/arith_map.v:62.5-70.4|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/cells_map.v:26.33-27.52"
+            "src": "topModule.v:55.10-69.2|keyboard.v:72.30-72.43|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/arith_map.v:62.5-70.4|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/cells_map.v:26.33-27.52"
           },
           "port_directions": {
             "I0": "input",
@@ -10353,7 +10353,7 @@
           "parameters": {
           },
           "attributes": {
-            "src": "topModule.v:53.10-65.2|keyboard.v:69.30-69.43|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/arith_map.v:62.5-70.4"
+            "src": "topModule.v:55.10-69.2|keyboard.v:72.30-72.43|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/arith_map.v:62.5-70.4"
           },
           "port_directions": {
             "CI": "input",
@@ -10374,7 +10374,7 @@
           "parameters": {
           },
           "attributes": {
-            "src": "topModule.v:53.10-65.2|keyboard.v:69.30-69.43|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/arith_map.v:62.5-70.4"
+            "src": "topModule.v:55.10-69.2|keyboard.v:72.30-72.43|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/arith_map.v:62.5-70.4"
           },
           "port_directions": {
             "CI": "input",
@@ -10395,7 +10395,14 @@
           "hide_name": 0,
           "bits": [ 15 ],
           "attributes": {
-            "src": "topModule.v:68.6-68.16"
+            "src": "topModule.v:72.6-72.16"
+          }
+        },
+        "btn_id": {
+          "hide_name": 0,
+          "bits": [ "x", "x", "x", "x" ],
+          "attributes": {
+            "src": "topModule.v:52.12-52.18"
           }
         },
         "btn_press": {
@@ -10463,15 +10470,15 @@
         },
         "gpio_2_SB_DFFESR_Q_D": {
           "hide_name": 0,
-          "bits": [ 16, 17 ],
+          "bits": [ 18, 17 ],
           "attributes": {
             "force_downto": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:37.9-43.16|keyboard.v:0.0-0.0|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/techmap.v:578.19-578.22"
+            "src": "topModule.v:55.10-69.2|keyboard.v:40.9-46.16|keyboard.v:0.0-0.0|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/techmap.v:578.19-578.22"
           }
         },
         "gpio_2_SB_DFFESR_Q_R": {
           "hide_name": 0,
-          "bits": [ 18 ],
+          "bits": [ 16 ],
           "attributes": {
           }
         },
@@ -10534,7 +10541,7 @@
           "bits": [ 28, 26 ],
           "attributes": {
             "force_downto": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:30.9-36.16|keyboard.v:0.0-0.0|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/techmap.v:578.19-578.22"
+            "src": "topModule.v:55.10-69.2|keyboard.v:33.9-39.16|keyboard.v:0.0-0.0|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/techmap.v:578.19-578.22"
           }
         },
         "gpio_45_SB_DFFESR_Q_R": {
@@ -10569,7 +10576,7 @@
           "bits": [ 19 ],
           "attributes": {
             "hdlname": "u_keyboard any_btn",
-            "src": "topModule.v:53.10-65.2|keyboard.v:51.10-51.17"
+            "src": "topModule.v:55.10-69.2|keyboard.v:54.10-54.17"
           }
         },
         "u_keyboard.btn_active": {
@@ -10577,7 +10584,7 @@
           "bits": [ 14 ],
           "attributes": {
             "hdlname": "u_keyboard btn_active",
-            "src": "topModule.v:53.10-65.2|keyboard.v:47.10-47.20"
+            "src": "topModule.v:55.10-69.2|keyboard.v:50.10-50.20"
           }
         },
         "u_keyboard.btn_count": {
@@ -10585,7 +10592,7 @@
           "bits": [ 22, 23, 24, 25 ],
           "attributes": {
             "hdlname": "u_keyboard btn_count",
-            "src": "topModule.v:53.10-65.2|keyboard.v:48.15-48.24"
+            "src": "topModule.v:55.10-69.2|keyboard.v:51.15-51.24"
           }
         },
         "u_keyboard.btn_count_SB_DFFESS_Q_D": {
@@ -10593,7 +10600,7 @@
           "bits": [ 32, 30, 31, 29 ],
           "attributes": {
             "force_downto": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:69.30-69.43|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/arith_map.v:33.26-33.27"
+            "src": "topModule.v:55.10-69.2|keyboard.v:72.30-72.43|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/arith_map.v:33.26-33.27"
           }
         },
         "u_keyboard.btn_count_SB_DFFESS_Q_D_SB_LUT4_O_I3": {
@@ -10601,7 +10608,15 @@
           "bits": [ "1", 22, 34, 33 ],
           "attributes": {
             "force_downto": "00000000000000000000000000000001",
-            "src": "topModule.v:53.10-65.2|keyboard.v:69.30-69.43|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/arith_map.v:51.21-51.22"
+            "src": "topModule.v:55.10-69.2|keyboard.v:72.30-72.43|/home/rami/.apio/packages/tools-oss-cad-suite/lib/../share/yosys/ice40/arith_map.v:51.21-51.22"
+          }
+        },
+        "u_keyboard.btn_id": {
+          "hide_name": 0,
+          "bits": [ "x", "x", "x", "x" ],
+          "attributes": {
+            "hdlname": "u_keyboard btn_id",
+            "src": "topModule.v:55.10-69.2|keyboard.v:14.26-14.32"
           }
         },
         "u_keyboard.btn_press": {
@@ -10609,7 +10624,7 @@
           "bits": [ 14 ],
           "attributes": {
             "hdlname": "u_keyboard btn_press",
-            "src": "topModule.v:53.10-65.2|keyboard.v:9.21-9.30"
+            "src": "topModule.v:55.10-69.2|keyboard.v:10.21-10.30"
           }
         },
         "u_keyboard.btn_store": {
@@ -10617,7 +10632,7 @@
           "bits": [ 10, 11, 12, 13 ],
           "attributes": {
             "hdlname": "u_keyboard btn_store",
-            "src": "topModule.v:53.10-65.2|keyboard.v:10.26-10.35"
+            "src": "topModule.v:55.10-69.2|keyboard.v:11.26-11.35"
           }
         },
         "u_keyboard.clk": {
@@ -10625,7 +10640,7 @@
           "bits": [ 15 ],
           "attributes": {
             "hdlname": "u_keyboard clk",
-            "src": "topModule.v:53.10-65.2|keyboard.v:2.15-2.18"
+            "src": "topModule.v:55.10-69.2|keyboard.v:2.15-2.18"
           }
         },
         "u_keyboard.cols": {
@@ -10633,7 +10648,7 @@
           "bits": [ 6, 7, 8, 9 ],
           "attributes": {
             "hdlname": "u_keyboard cols",
-            "src": "topModule.v:53.10-65.2|keyboard.v:4.26-4.30"
+            "src": "topModule.v:55.10-69.2|keyboard.v:5.26-5.30"
           }
         },
         "u_keyboard.rows": {
@@ -10641,7 +10656,7 @@
           "bits": [ 2, 3, 4, 5 ],
           "attributes": {
             "hdlname": "u_keyboard rows",
-            "src": "topModule.v:53.10-65.2|keyboard.v:5.26-5.30"
+            "src": "topModule.v:55.10-69.2|keyboard.v:4.26-4.30"
           }
         },
         "u_keyboard.rst": {
@@ -10649,7 +10664,7 @@
           "bits": [ "0" ],
           "attributes": {
             "hdlname": "u_keyboard rst",
-            "src": "topModule.v:53.10-65.2|keyboard.v:3.15-3.18"
+            "src": "topModule.v:55.10-69.2|keyboard.v:3.15-3.18"
           }
         }
       }

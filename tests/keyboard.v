@@ -1,15 +1,18 @@
 module keyboard(
         input clk,
         input rst,
-        output reg [3:0] cols, 
         input wire [3:0] rows,
+        output reg [3:0] cols, 
+        output reg [3:0] rows_debug,
         output reg is_num,
         output reg is_op,
         output reg is_eq,
         output wire btn_press,
         output reg [3:0] btn_store,
         output reg [3:0] num_val,
-        output reg [1:0] op_val);
+        output reg [1:0] op_val,
+        output reg [3:0] btn_id,
+        );
 
 
     //Ring counter para seleccionar columnas
@@ -22,23 +25,23 @@ module keyboard(
             else
                 cols <= cols << 1;
         end
+        rows_debug <= rows;
     end
 
-    //Armo el valor que recibo, combino col y fila
-    reg [3:0] btn_id;
+    //|ue recibo, combino col y fila
     always @(*) begin
         case (cols)
-            4'b1000: btn_id[3:2] = 2'b00;
-            4'b0100: btn_id[3:2] = 2'b01;
-            4'b0010: btn_id[3:2] = 2'b10;
-            4'b0001: btn_id[3:2] = 2'b11; 
+            4'b1000: btn_id[3:2] = 2'b11;
+            4'b0100: btn_id[3:2] = 2'b10;
+            4'b0010: btn_id[3:2] = 2'b01;
+            4'b0001: btn_id[3:2] = 2'b00; 
             default: btn_id[3:2] = 2'b00;
         endcase
         case (rows)
-            4'b1000: btn_id[1:0] = 2'b00;
-            4'b0100: btn_id[1:0] = 2'b01;
-            4'b0010: btn_id[1:0] = 2'b10;
-            4'b0001: btn_id[1:0] = 2'b11; 
+            4'b0001: btn_id[1:0] = 2'b00;
+            4'b0010: btn_id[1:0] = 2'b01;
+            4'b0100: btn_id[1:0] = 2'b10;
+            4'b1000: btn_id[1:0] = 2'b11;
             default: btn_id[1:0] = 2'b00;
         endcase
     end
@@ -50,7 +53,7 @@ module keyboard(
 
     wire any_btn;
     //indica que se presiono un boton
-    assign any_btn = rows[0] || rows [1] || rows [2] || rows[3];
+    assign any_btn = (rows[0] || rows [1] || rows [2] || rows[3]);
 
     //guardo el valor que leo de fila y col
     always @(posedge clk) begin
@@ -188,8 +191,6 @@ assign btn_press = btn_active;
                 num_val <= 4'd0;
                 op_val <= 2'd2;
             end
-
-
             BTN_EQ: begin 
                 is_num <= 0;
                 is_eq <= 1;
@@ -197,7 +198,6 @@ assign btn_press = btn_active;
                 num_val <= 4'd0;
                 op_val <= 2'd0;
             end
-
         endcase
     end
 

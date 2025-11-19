@@ -43,11 +43,13 @@ assign btn_store[1] = gpio_46;
 assign btn_store[2] = gpio_47;
 assign btn_store[3] = gpio_45;
 
+wire [3:0] rows_debug;
 wire is_num;
 wire is_op;
 wire is_eq;
 wire [3:0] num_val;
 wire [1:0] op_val;
+wire [3:0] btn_id;
 
 
 keyboard u_keyboard (
@@ -62,6 +64,8 @@ keyboard u_keyboard (
     .op_val(op_val),
     .btn_store(btn_store),
     .btn_press(btn_press),
+    .btn_id(btn_id),
+    .btn_store(btn_store)
 );
 
 wire HF_int_osc;
