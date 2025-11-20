@@ -2,7 +2,7 @@ module topModule
 (
     // GPIOs Keyboard Conecctions
     input wire gpio_23,
-    input wire gpio_25,
+    input wire gpio_9,
     input wire gpio_26,
     input wire gpio_27,
 
@@ -12,8 +12,8 @@ module topModule
     output wire gpio_37,
 
 
-    output wire gpio_2,
-    output wire gpio_46,
+    output wire gpio_48,
+    output wire gpio_3,
     output wire gpio_47,
     output wire gpio_45,
 
@@ -27,7 +27,7 @@ module topModule
 wire [3:0] rows;
 wire [3:0] cols;
 assign rows[0] = gpio_23;
-assign rows[1] = gpio_25;
+assign rows[1] = gpio_9;
 assign rows[2] = gpio_26;
 assign rows[3] = gpio_27;
 assign cols[0] = gpio_32;
@@ -38,8 +38,8 @@ assign cols[3] = gpio_37;
 wire btn_press= gpio_38;
 
 wire [3:0] btn_store;
-assign btn_store[0] = gpio_2;
-assign btn_store[1] = gpio_46;
+assign btn_store[0] = gpio_48;
+assign btn_store[1] = gpio_3;
 assign btn_store[2] = gpio_47;
 assign btn_store[3] = gpio_45;
 

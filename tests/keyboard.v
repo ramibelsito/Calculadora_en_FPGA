@@ -14,7 +14,6 @@ module keyboard(
         output reg [3:0] btn_id,
         );
 
-
     //Ring counter para seleccionar columnas
     always @(posedge clk) begin
         if (rst)
@@ -27,8 +26,8 @@ module keyboard(
         end
         rows_debug <= rows;
     end
-
-    //|ue recibo, combino col y fila
+    
+    // Decodeor de filas y columnas a ID de boton
     always @(*) begin
         case (cols)
             4'b1000: btn_id[3:2] = 2'b11;
@@ -42,7 +41,7 @@ module keyboard(
             4'b0010: btn_id[1:0] = 2'b01;
             4'b0100: btn_id[1:0] = 2'b10;
             4'b1000: btn_id[1:0] = 2'b11;
-            default: btn_id[1:0] = 2'b00;
+            default: btn_id[1:0] = 2'b01;
         endcase
     end
 
@@ -56,6 +55,7 @@ module keyboard(
     assign any_btn = (rows[0] || rows [1] || rows [2] || rows[3]);
 
     //guardo el valor que leo de fila y col
+    
     always @(posedge clk) begin
         if (rst) begin
             btn_store <= 4'd0;
@@ -64,7 +64,7 @@ module keyboard(
         end
         else begin
             if (any_btn) begin
-                btn_store <= btn_id;
+                btn_store = btn_id;
                 //btn_active <= 1;
                 btn_count <= 5;
             end
@@ -96,7 +96,7 @@ parameter BTN_EQ = 4'b1111; // 0000 0000 0000 0001
 assign btn_press = btn_active;
 
     //genero las salidas en base a los botones
-    always @(btn_active)
+    always @(*)
     begin
       if (!btn_active) begin
         is_num <= 0;
