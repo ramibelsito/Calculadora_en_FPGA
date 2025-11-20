@@ -1,6 +1,5 @@
 module keyboard(
         input clk,
-        input rst,
         input wire [3:0] rows,
         output reg [3:0] cols, 
         output reg [3:0] rows_debug,
@@ -13,11 +12,13 @@ module keyboard(
         output reg [1:0] op_val,
         output reg [3:0] btn_id,
         );
-
+    reg rst = 1'b1;
     //Ring counter para seleccionar columnas
     always @(posedge clk) begin
         if (rst)
+        begin
             cols <= 4'b0000;
+        end
         else begin
             if (cols == 4'b0000)
                 cols <= 4'b0001;
@@ -41,7 +42,7 @@ module keyboard(
             4'b0010: btn_id[1:0] = 2'b01;
             4'b0100: btn_id[1:0] = 2'b10;
             4'b1000: btn_id[1:0] = 2'b11;
-            default: btn_id[1:0] = 2'b01;
+            default: btn_id[1:0] = 2'b00;
         endcase
     end
 
@@ -61,17 +62,16 @@ module keyboard(
             btn_store <= 4'd0;
             //btn_active <= 0;
             btn_count <= 0;
+            rst<=1'b0;
         end
         else begin
             if (any_btn) begin
-                btn_store = btn_id;
+                btn_store <= btn_id;
                 //btn_active <= 1;
                 btn_count <= 5;
             end
             else if (btn_count > 0)
                 btn_count <= btn_count - 1;
-
-
         end
         
     end
