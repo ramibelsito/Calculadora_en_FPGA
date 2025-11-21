@@ -109,9 +109,6 @@ module fsm (
             default:
                 begin
                     next_state <= N1;
-                    num1_bcd <= 0;
-                    num2_bcd <= 0;
-                    operation <= 0;
                     aux <= N1;
                 end
         endcase

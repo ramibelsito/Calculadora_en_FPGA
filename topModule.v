@@ -1,11 +1,12 @@
 module topModule
 (
-    // GPIOs Dispaly Conecctions
-    input wire gpio_11,
-    output wire gpio_46,
-    output wire gpio_28,
+        // GPIOs Dispaly Conecctions
     output wire gpio_2,
+    output wire gpio_46,
     output wire gpio_47,
+    output wire gpio_45,
+
+    input wire gpio_38,
     // GPIOs Keyboard Conecctions
     input wire gpio_23,
     input wire gpio_25,
@@ -21,13 +22,15 @@ module topModule
 wire HF_int_osc;
 wire LF_int_osc;
 // Wires displays
-wire rst = gpio_11;
-wire data_out = gpio_46;
-wire data_ready = gpio_28;
-wire dataClk = gpio_2;
-wire dispClk = gpio_47;
-assign dataClk = LF_int_osc;
+
+wire rst = gpio_38;
+wire data_out = gpio_2;
+wire data_ready = gpio_46;
+wire dataClk = gpio_47;
+wire dispClk = gpio_45;
+assign dataClk = clk_logica;
 assign dispClk = LF_int_osc;
+wire clk_logica;
 // Wires keyboard
 wire [3:0] rows;
 wire [3:0] cols;
@@ -54,19 +57,16 @@ wire [1:0] operation;
 wire [15:0] out_ALU;
 wire [2:1] curr_state;
 // Wires Multiplexor -> Display
-wire clk_logica = dispClk;
-wire next_data;
 wire [15:0] data_shown;
 
 display_out u_display_out (
     .clk(LF_int_osc),
     .rst(rst),
-    .enable(1'b1),
     .bcd_in(data_shown),
     .data_out(data_out),
-    .data_ready(data_ready)
+    .data_ready(data_ready),
+    .clk_logica(clk_logica)
 );
-
 keyboard u_keyboard (
     .clk(LF_int_osc),
     .rst(rst),
@@ -103,8 +103,6 @@ multiplexor u_multiplexor (
     .num2_bcd(num2_bcd),
     .out_ALU(out_ALU),
     .operation(operation),
-    .clk_logica(clk_logica),
-    .next_data(next_data),
     .data_shown(data_shown)
 );
 
