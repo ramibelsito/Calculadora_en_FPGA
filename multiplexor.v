@@ -21,7 +21,7 @@ module multiplexor(
     parameter [2:1] N2 = 2'b10;
     parameter [2:1] EQ = 2'b11;
     reg cnt;
-    parameter integer MAX_COUNT = 20'd500000; // Ajusta este valor para cambiar la frecuencia
+    parameter integer MAX_COUNT = 20'd5000; // Ajusta este valor para cambiar la frecuencia
 
     // Divisor de frecuencia sencillo que también produce un pulso de enable
     // cuando el clock derivado cae a 0 para avanzar el display.
