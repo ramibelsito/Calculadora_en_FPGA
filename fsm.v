@@ -49,7 +49,6 @@ module fsm (
     // Lógica de próximo estado y salidas (combinacional).
     // Cada estado modela la captura de operandos u operaciones y
     // actualiza `num1_bcd`, `num2_bcd` y `operation` según las entradas.
-    reg [1:0] aux;
     always @(*)
         case (curr_state)
             // N1: ingreso del primer operando dígito a dígito hasta recibir una operación.
@@ -57,32 +56,27 @@ module fsm (
                 if (is_op)
                 begin
                     //num1_bcd <= num_val; 
-                    aux <= N1;
                     next_state <= OP;
                 end
                 else
                 begin
                     //num1_bcd <= 0; 
                     next_state <= N1;
-                    aux <= N1;
                 end
             end
             // OP: espera que se confirme la operación y opcionalmente la cambia.
             OP: begin
-                if (is_num && (aux == OP))
+                if (is_num)
                 begin
                     next_state <= N2;
-                    aux <= OP;
                 end
-               else if (is_op && aux == OP)
+               else if (is_op)
                 begin
                     next_state <= OP;
-                    aux <= OP;
                 end
                 else
                 begin
                     next_state <= N1;
-                    aux <= OP;
                 end
             end
             // N2: ingreso del segundo operando; si llega otro operador se encadena cálculo.
@@ -90,22 +84,18 @@ module fsm (
                 if (is_eq)
                 begin
                     next_state <= EQ;
-                    aux <= N2;
                 end
                else if (is_num)
                 begin
                     next_state <= N2;
-                    aux <= N2;
                 end
                 else if (is_op)
                 begin
                     next_state <= OP;
-                    aux <= N2;
                 end
                 else 
                 begin
                     next_state <= N1;
-                    aux <= N2;
                 end
             end
             // EQ: muestra resultado, pero permite arrancar una nueva operación inmediatamente.
@@ -113,23 +103,19 @@ module fsm (
                 if (is_num)
                 begin
                     next_state <= N1;
-                    aux <= EQ;
                 end
                 else if (is_op)
                 begin
                     next_state <= OP;
-                    aux <= EQ;
                 end
                 else 
                 begin
                     next_state <= N1;
-                    aux <= EQ;
                 end
             end
             default:
                 begin
                     next_state <= N1;
-                    aux <= N1;
                 end
         endcase
 
