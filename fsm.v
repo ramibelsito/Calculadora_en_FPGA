@@ -26,6 +26,26 @@ module fsm (
     parameter [1:0] OP = 2'b01;
     parameter [1:0] N2 = 2'b10;
     parameter [1:0] EQ = 2'b11;
+    /*
+    always@(*) begin
+        case (curr_state)
+            N1: begin
+            
+            end
+            OP: begin
+            
+            end
+            N2: begin
+            
+            end
+            EQ: begin
+            
+            end
+            default: ;
+        endcase
+    
+    end
+    */
     // Lógica de próximo estado y salidas (combinacional).
     // Cada estado modela la captura de operandos u operaciones y
     // actualiza `num1_bcd`, `num2_bcd` y `operation` según las entradas.
@@ -49,7 +69,7 @@ module fsm (
             end
             // OP: espera que se confirme la operación y opcionalmente la cambia.
             OP: begin
-                if (is_num && aux == OP)
+                if (is_num && (aux == OP))
                 begin
                     next_state <= N2;
                     aux <= OP;
@@ -116,78 +136,84 @@ module fsm (
     // Transición de estado sincronizada al clock (rst asíncrono activo en 0).
     always @(posedge clk)
     begin
-        if (curr_state == N1)
+        if (rst == 0) 
+        begin 
+            curr_state <= N1;
+        end
+        else 
         begin
-            if (next_state == OP)
-            begin 
-                num1_bcd <= num_val; 
-            end
-            else if (next_state == N1)
+            curr_state <= next_state;
+            if (curr_state == N1)
             begin
-                if (is_num)
-                begin
-                num1_bcd <= num1_bcd << 4; 
-                num1_bcd [3:0] <= num_val;
+                if (next_state == OP)
+                begin 
+                    num1_bcd <= num_val; 
                 end
-                else
+                else if (next_state == N1)
                 begin
-                num1_bcd <= 0;
+                    if (is_num)
+                    begin
+                    num1_bcd <= num1_bcd << 4; 
+                    num1_bcd [3:0] <= num_val;
+                    end
+                    else
+                    begin
+                    num1_bcd <= 0;
+                    end
+                end
+            end
+            else if (curr_state == OP)
+            begin
+                if (next_state == N2)
+                begin 
+                    num2_bcd <= num_val; 
+                end
+                else if (next_state == OP)
+                begin
+                    operation <= op_val;
+                end
+                else if (next_state == N1)
+                begin
+                    operation <= 0;
+                end
+            end
+            else if (curr_state == N2)
+            begin
+                if (next_state == EQ)
+                begin 
+                    num2_bcd <= num_val;
+                end
+                else if (next_state == N2)
+                begin
+                    num2_bcd <= num2_bcd << 4; 
+                    num2_bcd [3:0] <= num_val;
+                end
+                else if (next_state == OP)
+                begin
+                    // Evaluar num1_bcd y num2_bcd segun la operacion, guardar el resultado en num1_bcd 
+                    num1_bcd <= out_ALU;
+                    operation <= op_val;
+                end
+                else if (next_state == N1)
+                begin
+                    num2_bcd <= 0;
+                    operation <= 0;
+                end
+            end
+            else if (curr_state == EQ)
+            begin
+                if (next_state == N1)
+                begin
+                    if (is_num) num1_bcd <= num_val;
+                    else num1_bcd <= 0;
+                end
+                else if (next_state == OP)
+                begin
+                    operation <= op_val;
+                    num1_bcd <= out_ALU;
                 end
             end
         end
-        else if (curr_state == OP)
-        begin
-            if (next_state == N2)
-            begin 
-                num2_bcd <= num_val; 
-            end
-            else if (next_state == OP)
-            begin
-                operation <= op_val;
-            end
-            else if (next_state == N1)
-            begin
-                operation <= 0;
-            end
-        end
-        else if (curr_state == N2)
-        begin
-            if (next_state == EQ)
-            begin 
-                num2_bcd <= num_val;
-            end
-            else if (next_state == N2)
-            begin
-                num2_bcd <= num2_bcd << 4; 
-                num2_bcd [3:0] <= num_val;
-            end
-            else if (next_state == OP)
-            begin
-                // Evaluar num1_bcd y num2_bcd segun la operacion, guardar el resultado en num1_bcd 
-                num1_bcd <= out_ALU;
-                operation <= op_val;
-            end
-            else if (next_state == N1)
-            begin
-                num2_bcd <= 0;
-                operation <= 0;
-            end
-        end
-        else if (curr_state == EQ)
-        begin
-            if (next_state == N1)
-            begin
-                if (is_num) num1_bcd <= num_val;
-                else num1_bcd <= 0;
-            end
-            else if (next_state == OP)
-            begin
-                operation <= op_val;
-                num1_bcd <= out_ALU;
-            end
-        end
-        if (rst == 0) curr_state <= N1;
-        else curr_state <= next_state;
     end
 
 endmodule
