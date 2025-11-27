@@ -103,7 +103,8 @@ PassThrough u_PassThrough (
     .is_num(is_num),
     .is_op(is_op),
     .is_eq(is_eq),
-    .data_out_bcd(data_out_bcd)
+    .data_out_bcd(data_out_bcd),
+    .clk_logica(clk_logica),
 );
 
 //----------------------------------------------------------------------------
