@@ -9,9 +9,9 @@ module PassThrough(
     output reg [15:0] data_out_bcd,
 );
 
-always@(posedge clk) begin
+always@(*) begin
     if (rst) begin 
-        data_out_bcd <= 16'h0000;
+        data_out_bcd <= 16'h1111;
     end else if (is_num) begin
         data_out_bcd <= {12'd0, num_val}; // Extiende num_val a 16 bits
     end else if (is_op) begin

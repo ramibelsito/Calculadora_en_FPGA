@@ -9,7 +9,7 @@ module keyboard(
         output wire btn_press,
         output reg [3:0] num_val,
         output reg [1:0] op_val,
-        output reg [3:0] btn_store;
+        output reg [3:0] btn_store,
         );
     
     reg [3:0] btn_id;
@@ -70,7 +70,7 @@ module keyboard(
                 btn_count <= 5;
             end
             else if (btn_count > 0)
-                btn_count <= btn_count - 1;
+                btn_count <= (btn_count - 1);
         end
         
     end
@@ -98,104 +98,111 @@ assign btn_press = btn_active;
     always @(*)
     begin
       if (!btn_active) begin
-        is_num <= 0;
-        is_eq <= 0;
-        is_op <= 0;
-        num_val <= 4'd0;
-        op_val <= 2'd0;
+        is_num = 0;
+        is_eq = 0;
+        is_op = 0;
+        num_val = 4'd0;
+        op_val = 2'd0;
       end
       else
         case (btn_store)
             BTN_0: begin 
-                is_num <= 1;
-                is_eq <= 0;
-                is_op <= 0;
-                num_val <= 4'd0;
-                op_val <= 2'd0;
+                is_num = 1;
+                is_eq = 0;
+                is_op = 0;
+                num_val = 4'd0;
+                op_val = 2'd0;
             end
             BTN_1: begin 
-                is_num <= 1;
-                is_eq <= 0;
-                is_op <= 0;
-                num_val <= 4'd1;
-                op_val <= 2'd0;
+                is_num = 1;
+                is_eq = 0;
+                is_op = 0;
+                num_val = 4'd1;
+                op_val = 2'd0;
             end
             BTN_2: begin 
-                is_num <= 1;
-                is_eq <= 0;
-                is_op <= 0;
-                num_val <= 4'd2;
-                op_val <= 2'd0;
+                is_num = 1;
+                is_eq = 0;
+                is_op = 0;
+                num_val = 4'd2;
+                op_val = 2'd0;
             end
             BTN_3: begin 
-                is_num <= 1;
-                is_eq <= 0;
-                is_op <= 0;
-                num_val <= 4'd3;
-                op_val <= 2'd0;
+                is_num = 1;
+                is_eq = 0;
+                is_op = 0;
+                num_val = 4'd3;
+                op_val = 2'd0;
             end
             BTN_4: begin 
-                is_num <= 1;
-                is_eq <= 0;
-                is_op <= 0;
-                num_val <= 4'd4;
-                op_val <= 2'd0;
+                is_num = 1;
+                is_eq = 0;
+                is_op = 0;
+                num_val = 4'd4;
+                op_val = 2'd0;
             end
             BTN_5: begin 
-                is_num <= 1;
-                is_eq <= 0;
-                is_op <= 0;
-                num_val <= 4'd5;
-                op_val <= 2'd0;
+                is_num = 1;
+                is_eq = 0;
+                is_op = 0;
+                num_val = 4'd5;
+                op_val = 2'd0;
             end
             BTN_6: begin 
-                is_num <= 1;
-                is_eq <= 0;
-                is_op <= 0;
-                num_val <= 4'd6;
-                op_val <= 2'd0;
+                is_num = 1;
+                is_eq = 0;
+                is_op = 0;
+                num_val = 4'd6;
+                op_val = 2'd0;
             end
             BTN_7: begin 
-                is_num <= 1;
-                is_eq <= 0;
-                is_op <= 0;
-                num_val <= 4'd7;
-                op_val <= 2'd0;
+                is_num = 1;
+                is_eq = 0;
+                is_op = 0;
+                num_val = 4'd7;
+                op_val = 2'd0;
             end
             BTN_8: begin 
-                is_num <= 1;
-                is_eq <= 0;
-                is_op <= 0;
-                num_val <= 4'd8;
-                op_val <= 2'd0;
+                is_num = 1;
+                is_eq = 0;
+                is_op = 0;
+                num_val = 4'd8;
+                op_val = 2'd0;
             end
             BTN_9: begin 
-                is_num <= 1;
-                is_eq <= 0;
-                is_op <= 0;
-                num_val <= 4'd9;
-                op_val <= 2'd0;
+                is_num = 1;
+                is_eq = 0;
+                is_op = 0;
+                num_val = 4'd9;
+                op_val = 2'd0;
             end
             BTN_ADD: begin 
-                is_num <= 0;
-                is_eq <= 0;
-                is_op <= 1;
-                num_val <= 4'd0;
-                op_val <= 2'd1;
+                is_num = 0;
+                is_eq = 0;
+                is_op = 1;
+                num_val = 4'd0;
+                op_val = 2'd1;
             end
             BTN_SUB: begin 
-                is_num <= 0;
-                is_eq <= 0;
-                is_op <= 1;
-                num_val <= 4'd0;
-                op_val <= 2'd2;
+                is_num = 0;
+                is_eq = 0;
+                is_op = 1;
+                num_val = 4'd0;
+                op_val = 2'd2;
             end
             BTN_EQ: begin 
-                is_num <= 0;
-                is_eq <= 1;
-                is_op <= 0;
-                num_val <= 4'd0;
-                op_val <= 2'd0;
+                is_num = 0;
+                is_eq = 1;
+                is_op = 0;
+                num_val = 4'd0;
+                op_val = 2'd0;
+            end
+            default: begin
+                is_num = 0;
+                is_eq = 0;
+                is_op = 0; 
+                num_val = 0; 
+                op_val = 0; 
             end
         endcase
     end

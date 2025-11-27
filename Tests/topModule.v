@@ -16,13 +16,15 @@ module topModule
     output wire gpio_35,
     output wire gpio_31,
     output wire gpio_37,
+
+    output wire gpio_28,
     
 );
 
 wire HF_int_osc;
 wire LF_int_osc;
 // Wires displays
-
+wire btn_press = gpio_28;
 wire rst = gpio_38;
 wire data_out = gpio_2;
 wire data_ready = gpio_46;
@@ -51,6 +53,24 @@ wire [3:0] num_val;
 wire [1:0] op_val;
 // Wires PassThrough -> Display
 wire [15:0] data_out_bcd;
+wire [3:0] btn_store;
+/*
+assign btn_store[0] = gpio_2;
+assign btn_store[1] = gpio_46;
+assign btn_store[2] = gpio_47;
+assign btn_store[3] = gpio_45; 
+
+assign num_val[0] = gpio_2;
+assign num_val[1] = gpio_46;
+assign num_val[2] = gpio_47;
+assign num_val[3] = gpio_45;
+
+assign data_out_bcd[0] = gpio_2;
+assign data_out_bcd[1] = gpio_46;
+assign data_out_bcd[2] = gpio_47;
+assign data_out_bcd[3] = gpio_45;
+*/
+
 
 display_out u_display_out (
     .clk(LF_int_osc),
@@ -71,7 +91,8 @@ keyboard u_keyboard (
     .is_eq(is_eq),
     .btn_press(btn_press),
     .num_val(num_val),
-    .op_val(op_val)
+    .op_val(op_val),
+    .btn_store(btn_store),
 );
 
 PassThrough u_PassThrough (

@@ -56,7 +56,7 @@ assign segment_data_calc = { bcd2seg(bcd_in[15:12]),
 
 // Paralelo a serie de 32 bits: toma `segment_data_calc` y lo desplaza cada next_data.
 reg next_data;
-parameter [31:0] send_interval = 31'd33; // controla la cadencia de envío en bits.
+parameter [31:0] send_interval = 31'd35; // controla la cadencia de envío en bits.
 reg [31:0] interval_counter;
 reg [31:0] segment_data_out;
 reg [20:0] cnt ;
@@ -100,10 +100,10 @@ always @(posedge clk)
         if (interval_counter == 0)
             segment_data_out <= segment_data_calc;
         else 
-            segment_data_out <= segment_data_out >> 1;
+            segment_data_out <= (segment_data_out >> 1);
 
         if (interval_counter <= send_interval)
-            interval_counter <= interval_counter + 1;
+            interval_counter <= (interval_counter + 1);
         else interval_counter <= 0;
     end
     end
